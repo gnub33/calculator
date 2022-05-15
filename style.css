@@ -1,0 +1,42 @@
+
+.main{
+    border: 3px orange dashed;
+    display: flex;
+    margin-top: 15em;
+    justify-content: center;
+    align-items: center;
+}
+
+h2 {
+    padding: 3em;
+}
+
+.calculator {
+    border: 2px black solid;
+    width: 300px;
+    height: 500px;
+    margin-left: 0;
+    background-color: ghostwhite;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 25% 1fr 1fr 1fr;
+}
+
+button {
+    background-color: lightblue;
+}
+
+.display{
+    border: 1px red solid;
+}
+
+.display-box {
+    border: 1px blue solid;
+    text-align: right;
+    margin: 1em;
+    background-color: black;
+    color: white;
+}
