@@ -68,7 +68,11 @@
   .equal{
     grid-column-start: 4;
     border-radius: 0 0 10px;
-  /*   border: aqua solid 1px; */
+    background-color: #FF9500;
+  }
+
+  .equal:active {
+    background-color: rgb(201, 125, 32);
   }
   
   .divide {
