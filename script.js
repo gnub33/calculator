@@ -1,6 +1,6 @@
 let displayValue = '0';
-let valueA;
-let valueB;
+let valueA = 0;
+let valueB = 0;
 let operation = '';
 
 
@@ -25,10 +25,7 @@ let numbers = document.querySelectorAll('.number');
 const popNumber = (e) => {
 
     //when another number is clicked, it replaces current number on display
-    if(operation != '') { //meaning if an operator has been selected
-        //displayValue = '0'; //resets display for second number
-        //display.innerHTML = displayValue;
-        
+    if(operation != '') { //if an operator has been selected
     }
 
   if(displayValue === '0'){
@@ -43,38 +40,50 @@ numbers.forEach(number=>
                 number.setAttribute('onclick','popNumber(this)'));
 
 
-// console.log(numbers[2]);
-//console.log(displayValue);
-
-//testing
-let test = document.querySelector('.test');
-let testButton = document.querySelector('.test-button');
-const testFunc = () => {
-    test.innerHTML =  `current value is ${displayValue}`;
-}
-
 //clear display when AC
 const clear = () => {
     displayValue = '0';
     display.innerHTML = displayValue;
     valueA = 0;
+    valueB = 0;
     operation = '';
 }
 const allClear = document.querySelector('.clear')
 allClear.addEventListener('click', clear)
 
 //actual calculator functionality
-const calculation = (e) => {
+const calculation = (e) => { // when you click an operator button
 
-    if(e.innerHTML != '=') { //calculate won't run on '='
-        valueA = parseInt(displayValue); 
-        operation = e.innerHTML; // saves the operator to be used later
-        displayValue = '';
-    }
-    //when an operator is clicked, the current number and the operator are saved
+    //operation = e.innerHTML;
+
     
-    console.log(`value A: ${valueA}`);
-    console.log(operation);
+
+    if(operation == '=' || valueA == 0){//after solution button is clicked or upon clicking clear button
+        valueA = parseInt(displayValue);
+        operation = e.innerHTML;
+        displayValue = '';
+
+    } else if(displayValue == '') { //if user selects another operator instead of number
+        //pass;
+    }
+    
+    else { //when chaining operations
+        console.log(`first value B before parse: ${valueB}`);
+        console.log(typeof displayValue)
+        console.log(displayValue)
+        console.log(parseInt(displayValue))
+        valueB = parseInt(displayValue);
+        console.log(`value A: ${valueA}`)
+        console.log(`value B after parse: ${valueB}`);
+
+        displayValue = operate(operation, valueA, valueB); 
+        console.log(`solution is ${displayValue}`)
+        display.innerHTML = displayValue; //shows solution immediately
+        valueA = parseInt(displayValue); //solution goes to A variable
+        operation = e.innerHTML;// update current operator
+        displayValue = ''; //clear display for next number input
+    }
+
 
 }
 
@@ -86,7 +95,8 @@ const solution = (e) => {
     valueB = parseInt(displayValue); 
     displayValue = operate(operation, valueA, valueB);
     display.innerHTML = displayValue;
-    console.log(`value B: ${valueB}`);
+    valueA = parseInt(displayValue);
+    operation = '=';
 }
 
 const equals = document.querySelector('.equal');
@@ -94,6 +104,20 @@ equals.addEventListener('click', solution);
 
 //console.log(operate('+', 2, 3));
 
+//testing
+let test = document.querySelector('.test');
+let testButton = document.querySelector('.test-button');
+const testFunc = () => {
+    test.innerHTML =  `displayValue string is ${displayValue} current A value is ${valueA} and B value is ${valueB}, operation is ${operation}`;
+}
+
+// let test = document.querySelector('.test');
+// let testButton = document.querySelector('.test-button');
+// const testFunc = () => {
+//     test.innerHTML =  `current A value is ${valueA} and B value is ${valueB}, operation is ${operation}`;
+// }
+
 //BUUUGGGS
+//Switch operator on the fly
 //need to visually show which operator is selected 
-//add functionality to +/- and & buttons
+//add functionality to +/- and % buttons
