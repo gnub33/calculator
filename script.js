@@ -26,8 +26,8 @@ const popNumber = (e) => {
 
     //when another number is clicked, it replaces current number on display
     if(operation != '') { //meaning if an operator has been selected
-        displayValue = '0'; //resets display for second number
-        display.innerHTML = displayValue;
+        //displayValue = '0'; //resets display for second number
+        //display.innerHTML = displayValue;
         
     }
 
@@ -69,6 +69,7 @@ const calculation = (e) => {
     if(e.innerHTML != '=') { //calculate won't run on '='
         valueA = parseInt(displayValue); 
         operation = e.innerHTML; // saves the operator to be used later
+        displayValue = '';
     }
     //when an operator is clicked, the current number and the operator are saved
     
@@ -94,6 +95,5 @@ equals.addEventListener('click', solution);
 //console.log(operate('+', 2, 3));
 
 //BUUUGGGS
-//second number input only allows for single digits
 //need to visually show which operator is selected 
 //add functionality to +/- and & buttons
