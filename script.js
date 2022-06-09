@@ -61,27 +61,25 @@ const calculation = (e) => { // when you click an operator button
     if(operation == '=' || valueA == 0){//after solution button is clicked or upon clicking clear button
         valueA = parseInt(displayValue);
         operation = e.innerHTML;
-        displayValue = '';
+        displayValue = '0';
 
-    } else if(displayValue == '') { //if user selects another operator instead of number
-        //pass;
-    }
+    } 
     
     else { //when chaining operations
-        console.log(`first value B before parse: ${valueB}`);
-        console.log(typeof displayValue)
-        console.log(displayValue)
-        console.log(parseInt(displayValue))
+        // console.log(`first value B before parse: ${valueB}`);
+        // console.log(typeof displayValue)
+        // console.log(displayValue)
+        // console.log(parseInt(displayValue))
         valueB = parseInt(displayValue);
-        console.log(`value A: ${valueA}`)
-        console.log(`value B after parse: ${valueB}`);
+        // console.log(`value A: ${valueA}`)
+        // console.log(`value B after parse: ${valueB}`);
 
         displayValue = operate(operation, valueA, valueB); 
-        console.log(`solution is ${displayValue}`)
+        // console.log(`solution is ${displayValue}`)
         display.innerHTML = displayValue; //shows solution immediately
         valueA = parseInt(displayValue); //solution goes to A variable
         operation = e.innerHTML;// update current operator
-        displayValue = ''; //clear display for next number input
+        displayValue = '0'; //clear display for next number input
     }
 
 
