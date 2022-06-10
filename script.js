@@ -2,6 +2,7 @@ let displayValue = '0';
 let valueA = 0;
 let valueB = 0;
 let operation = '';
+let equalMode = false; //equal mode allows the last operation to be repeated when equal sign is clicked again
 
 
 const operate = (operator, a, b) => {
@@ -14,7 +15,11 @@ const operate = (operator, a, b) => {
     case 'x':
       return a*b;
     case '➗':
-      return a/b;
+        if(b == 0){
+            return 'Nope'
+        }else {
+            return a/b;
+        }
   }
 }
 
@@ -55,8 +60,8 @@ allClear.addEventListener('click', clear)
 const calculation = (e) => { // when you click an operator button
 
     //operation = e.innerHTML;
-
-    
+    equalMode = false;
+    console.log(equalMode)
 
     if(operation == '=' || valueA == 0){//after solution button is clicked or upon clicking clear button
         valueA = parseInt(displayValue);
@@ -66,16 +71,9 @@ const calculation = (e) => { // when you click an operator button
     } 
     
     else { //when chaining operations
-        // console.log(`first value B before parse: ${valueB}`);
-        // console.log(typeof displayValue)
-        // console.log(displayValue)
-        // console.log(parseInt(displayValue))
+ 
         valueB = parseInt(displayValue);
-        // console.log(`value A: ${valueA}`)
-        // console.log(`value B after parse: ${valueB}`);
-
         displayValue = operate(operation, valueA, valueB); 
-        // console.log(`solution is ${displayValue}`)
         display.innerHTML = displayValue; //shows solution immediately
         valueA = parseInt(displayValue); //solution goes to A variable
         operation = e.innerHTML;// update current operator
@@ -90,11 +88,25 @@ operator.forEach(x=>x.setAttribute('onclick','calculation(this)'));
 
     //clicking equal sign will display the solution
 const solution = (e) => {
-    valueB = parseInt(displayValue); 
-    displayValue = operate(operation, valueA, valueB);
-    display.innerHTML = displayValue;
-    valueA = parseInt(displayValue);
-    operation = '=';
+
+    if(operation == '') { //prevents error if no operator has been selected
+        //pass
+    }else if(equalMode){ //after pressing equal sign twice in a row
+        displayValue = operate(operation, valueA, valueB);
+        display.innerHTML = displayValue;
+        valueA = parseInt(displayValue);
+    }else {
+        valueB = parseInt(displayValue); 
+        displayValue = operate(operation, valueA, valueB);
+        display.innerHTML = displayValue;
+        valueA = parseInt(displayValue);
+        displayValue = '0' //resets display after calculation so previous number is omitted from screen
+        equalMode = true;
+        operation = '=';//WTF HERE IS THE PROBLEM!!!!!
+    }
+
+    console.log(equalMode)
+    
 }
 
 const equals = document.querySelector('.equal');
@@ -116,6 +128,10 @@ const testFunc = () => {
 // }
 
 //BUUUGGGS
-//Switch operator on the fly
-//need to visually show which operator is selected 
+//After hitting solution, problem does not chain if operation = '='. It will reset if new number is selected
+//Vis-a-verse if operation != '=' the problem will chain
+//should only chain after solution button if another operator is selected. It should reset if a number is selected
+//need to visually show which operator is selected. use a border.
 //add functionality to +/- and % buttons
+//floating point numbers with '.'
+//AC becomes c when valueA or valueB have number > 0
