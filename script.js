@@ -29,6 +29,8 @@ let numbers = document.querySelectorAll('.number');
 
 const popNumber = (e) => {
 
+    allClear.innerHTML ='C';
+
     //when another number is clicked, it replaces current number on display
     if(operation != '') { //if an operator has been selected
     }
@@ -47,6 +49,7 @@ numbers.forEach(number=>
 
 //clear display when AC
 const clear = () => {
+    allClear.innerHTML ='AC';
     displayValue = '0';
     display.innerHTML = displayValue;
     valueA = 0;
@@ -64,7 +67,7 @@ const calculation = (e) => { // when you click an operator button
     console.log(equalMode)
 
     if(operation == '=' || valueA == 0){//after solution button is clicked or upon clicking clear button
-        valueA = parseInt(displayValue);
+        valueA = parseFloat(displayValue);
         operation = e.innerHTML;
         displayValue = '0';
 
@@ -72,10 +75,10 @@ const calculation = (e) => { // when you click an operator button
     
     else { //when chaining operations
  
-        valueB = parseInt(displayValue);
+        valueB = parseFloat(displayValue);
         displayValue = operate(operation, valueA, valueB); 
         display.innerHTML = displayValue; //shows solution immediately
-        valueA = parseInt(displayValue); //solution goes to A variable
+        valueA = parseFloat(displayValue); //solution goes to A variable
         operation = e.innerHTML;// update current operator
         displayValue = '0'; //clear display for next number input
     }
@@ -94,12 +97,12 @@ const solution = (e) => {
     }else if(equalMode){ //after pressing equal sign twice in a row
         displayValue = operate(operation, valueA, valueB);
         display.innerHTML = displayValue;
-        valueA = parseInt(displayValue);
+        valueA = parseFloat(displayValue);
     }else {
-        valueB = parseInt(displayValue); 
+        valueB = parseFloat(displayValue); 
         displayValue = operate(operation, valueA, valueB);
         display.innerHTML = displayValue;
-        valueA = parseInt(displayValue);
+        valueA = parseFloat(displayValue);
         displayValue = '0' //resets display after calculation so previous number is omitted from screen
         equalMode = true;
         operation = '=';//WTF HERE IS THE PROBLEM!!!!!
@@ -114,18 +117,32 @@ equals.addEventListener('click', solution);
 
 //console.log(operate('+', 2, 3));
 
-//testing
+//for testing...hidden by default
 let test = document.querySelector('.test');
 let testButton = document.querySelector('.test-button');
 const testFunc = () => {
     test.innerHTML =  `displayValue string is ${displayValue} current A value is ${valueA} and B value is ${valueB}, operation is ${operation}`;
 }
+testButton.style.display = 'none';
 
-// let test = document.querySelector('.test');
-// let testButton = document.querySelector('.test-button');
-// const testFunc = () => {
-//     test.innerHTML =  `current A value is ${valueA} and B value is ${valueB}, operation is ${operation}`;
-// }
+//Percentage
+const percentage = ()=> {
+    
+}
+const percent = document.querySelector('.percent');
+percent.addEventListener('click', percentage);
+
+//Negative % Positive Values
+const changeSign = () => {
+    let a = parseFloat(displayValue)
+    a *= -1;
+    displayValue = a.toString();
+    display.innerHTML = displayValue;
+}
+const posneg = document.querySelector('.posneg');
+posneg.addEventListener('click', changeSign);
+
+
 
 //BUUUGGGS
 //After hitting solution, problem does not chain if operation = '='. It will reset if new number is selected
@@ -133,5 +150,3 @@ const testFunc = () => {
 //should only chain after solution button if another operator is selected. It should reset if a number is selected
 //need to visually show which operator is selected. use a border.
 //add functionality to +/- and % buttons
-//floating point numbers with '.'
-//AC becomes c when valueA or valueB have number > 0
