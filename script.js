@@ -127,14 +127,17 @@ testButton.style.display = 'none';
 
 //Percentage
 const percentage = ()=> {
-    
+    let b = parseFloat(displayValue);
+    b /= 100;
+    displayValue = b.toString();
+    display.innerHTML = displayValue;
 }
 const percent = document.querySelector('.percent');
 percent.addEventListener('click', percentage);
 
 //Negative % Positive Values
 const changeSign = () => {
-    let a = parseFloat(displayValue)
+    let a = parseFloat(displayValue);
     a *= -1;
     displayValue = a.toString();
     display.innerHTML = displayValue;
@@ -149,4 +152,3 @@ posneg.addEventListener('click', changeSign);
 //Vis-a-verse if operation != '=' the problem will chain
 //should only chain after solution button if another operator is selected. It should reset if a number is selected
 //need to visually show which operator is selected. use a border.
-//add functionality to +/- and % buttons
